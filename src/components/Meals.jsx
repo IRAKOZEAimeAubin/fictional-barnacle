@@ -1,11 +1,31 @@
 import { useGlobalContext } from "../context"
+import { BsHandThumbsUp } from "react-icons/bs"
 
 const Meals = () => {
-    const context = useGlobalContext()
-    console.log( context )
+    const { loading, meals } = useGlobalContext();
+
+    if ( loading ) {
+        return (
+            <section className='section'>
+                <h4>Loading...</h4>
+            </section>
+        )
+    }
     return (
-        <h1>Meals</h1>
-    )
+        <section className='section-center'>
+            { meals.map( ( meal ) => {
+                const { idMeal, strMeal: name, strMealThumb: image } = meal;
+
+                return <article key={ idMeal } className='single-meal'>
+                    <img src={ image } alt={ name } className='img' />
+                    <footer>
+                        <h5>{ name }</h5>
+                        <button className='like-btn' ><BsHandThumbsUp /></button>
+                    </footer>
+                </article>;
+            } ) }
+        </section>
+    );
 }
 
 export default Meals
